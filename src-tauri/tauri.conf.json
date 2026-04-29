@@ -12,9 +12,21 @@
   "app": {
     "windows": [
       {
+        "label": "main",
         "title": "omnilynceus-loader",
+        "url": "index.html",
         "width": 800,
         "height": 600
+      },
+      {
+        "label": "mask",
+        "url": "mask.html",
+        "visible": false,
+        "fullscreen": true,
+        "titleBarStyle": "Transparent",
+        "transparent": true,
+        "decorations": false,
+        "alwaysOnTop": true
       }
     ],
     "security": {
