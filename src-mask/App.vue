@@ -1,32 +1,22 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { listen } from '@tauri-apps/api/event';
-import { invoke } from '@tauri-apps/api/core';
 
 const pos = ref({ x: 0, y: 0 }); // 初始值可以设为 0
 
-// 定义一个执行随机定位并通知 Rust 的函数
-const doRandomize = () => {
-    const newX = Math.floor(Math.random() * window.innerWidth);
-    const newY = Math.floor(Math.random() * window.innerHeight);
-    pos.value = { x: newX, y: newY };
-    
-    // 考虑 DPI 缩放传给 Rust
-    const dpi = window.devicePixelRatio;
-    invoke('move_mouse_to', { 
-      x: newX * dpi, 
-      y: newY * dpi 
-    });
+const transferPixel = (x: number, y: number) => {
+  const dpr = window.devicePixelRatio;
+  return {
+    x: Math.round(x / dpr),
+    y: Math.round(y / dpr)
+  };
 };
 
 onMounted(async () => {
-  // 1. 注册信号监听（用于后续点击按钮或按 R 键触发）
-  await listen('trigger-random', () => {
-    doRandomize();
+  await listen('move-to', (event) => {
+    const { x, y } = event?.payload as { x: number, y: number };
+    pos.value = transferPixel(x, y);
   });
-
-  // 2. 界面加载完成后，立即执行一次，确保圆圈首次出现就与鼠标同步对齐
-  doRandomize();
 });
 </script>
 

@@ -1,0 +1,16 @@
+[metadata]
+author = "omnilynceus"
+title = "omnilynceus-loader"
+version = "0.1.0"
+log_level = "DEBUG"
+
+[metadata.screen]
+width = 2560
+height = 1600
+
+[paths.dirs]
+logs = 'D:\Workspace\OmniLynceusLoader\oll-data\logs'
+data = 'D:\Workspace\OmniLynceusLoader\oll-data'
+
+[paths.files]
+config = 'D:\Workspace\OmniLynceusLoader\oll-data\config.toml'

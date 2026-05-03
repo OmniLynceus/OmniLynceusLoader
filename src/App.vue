@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from "vue";
-import { emit } from '@tauri-apps/api/event';
+import { invoke } from "@tauri-apps/api/core";
 
 // 统一的信号触发函数
 const notifyRandomize = () => {
-  emit('trigger-random');
+  invoke("random_move").catch((err) => {
+    console.error("调用 random_move 失败:", err);
+  });
   console.log("Main: 已发送随机位置信号");
 };
 
